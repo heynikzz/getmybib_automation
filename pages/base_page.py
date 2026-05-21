@@ -96,3 +96,13 @@ class BasePage:
             return True
         except TimeoutException:
             return False
+
+    def find_all(self, locator: Locator) -> list[WebElement]:
+        return self.driver.find_elements(*locator)
+
+    def click_element(self, element: WebElement) -> None:
+        self.logger.info("Clicking web element: %s", element.tag_name)
+        try:
+            element.click()
+        except WebDriverException:
+            self.driver.execute_script("arguments[0].click();", element)
